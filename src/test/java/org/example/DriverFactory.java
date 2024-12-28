@@ -8,7 +8,7 @@ import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 
-public class WebDriverSelector {
+public class DriverFactory {
     public static WebDriver getDriver(String driver) {
         if (driver.equals("chrome")) {
             ChromeOptions chromeOptions = new ChromeOptions();
