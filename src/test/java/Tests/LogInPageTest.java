@@ -1,6 +1,7 @@
 package Tests;
 
 import Pages.LogInPage;
+import Utils.SeleniumHelper;
 import org.example.BaseTest;
 
 import org.testng.Assert;
@@ -51,7 +52,7 @@ public class LogInPageTest extends BaseTest {
 
         driver.get("https://dev.datalexing.sa/en/login/");
         LogInPage logInPage = new LogInPage(driver);
-        logInPage.enterEmail("q@mdrsвtdsg.rsey");
+        logInPage.enterEmail("q@mdsrsвtdsg.rsey");
         logInPage.enterPassword("123456789");
         logInPage.logInButtonClick();
         Assert.assertEquals(logInPage.getTextOfPopUpError(),"No active account found with the given credentials.");
