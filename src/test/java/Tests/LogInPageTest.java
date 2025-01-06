@@ -2,24 +2,33 @@ package Tests;
 
 import Pages.LogInPage;
 import Utils.SeleniumHelper;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
 import org.example.BaseTest;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 
 
 public class LogInPageTest extends BaseTest {
 
 
     @Test
-    public void SmokeLoginTest(){
+    public void SmokeLoginTest() throws IOException {
         driver.get("https://dev.datalexing.sa/en/login/");
+        ExtentTest test = extentReports.createTest("Smoke login text");
         LogInPage logInPage = new LogInPage(driver);
         logInPage.enterEmail("testoritoto@mail.ru");
+        test.log(Status.PASS,"Email is entered",SeleniumHelper.getScreenshot(driver));
         logInPage.enterPassword("Testowanie999!!!");
+        test.log(Status.PASS,"Password is entered",SeleniumHelper.getScreenshot(driver));
         logInPage.logInButtonClick();
+        test.log(Status.PASS,"User is logged in",SeleniumHelper.getScreenshot(driver));
     }
     @Test
     public void FieldsValidationTest(){
@@ -64,4 +73,5 @@ public class LogInPageTest extends BaseTest {
 
 
     }
+
 }

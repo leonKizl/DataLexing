@@ -98,9 +98,8 @@ public class LogInPage {
 
     public void absenceOfEmailInputError(WebDriver driver) {
         logger.info("Check absence of email input error");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
         try {
-            wait.until(ExpectedConditions.invisibilityOf(emailInputError));
+            SeleniumHelper.waitForElementToBeInvisible(driver,emailInputError);
         } catch (org.openqa.selenium.TimeoutException e) {
             throw new AssertionError("Email input error is displayed, but it should not be.");
         }
@@ -109,9 +108,8 @@ public class LogInPage {
 
     public void absenceOfPasswordInputError(WebDriver driver) {
         logger.info("Check absence of password input error");
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(1));
         try {
-            wait.until(ExpectedConditions.invisibilityOf(passwordInputError));
+            SeleniumHelper.waitForElementToBeInvisible(driver,passwordInputError);
         } catch (org.openqa.selenium.TimeoutException e) {
             throw new AssertionError("Password input error is displayed, but it should not be.");
         }
@@ -129,8 +127,9 @@ public class LogInPage {
     public void closePopUpError(WebDriver driver){
         logger.info("Closing pop up");
         Actions actions = new Actions(driver);
-        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(3));
-        wait.until(ExpectedConditions.visibilityOf(closePopUpErrorButton));
+//        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(3));
+//        wait.until(ExpectedConditions.visibilityOf(closePopUpErrorButton));
+        SeleniumHelper.waitForElementToBeVisible(driver,closePopUpErrorButton);
         actions.moveToElement(closePopUpErrorButton).click().perform();
         logger.info("pop up is closed");
     }
@@ -139,12 +138,10 @@ public class LogInPage {
         logger.info("Check if pop up doesn't display");
         Thread.sleep(1000);
         try {
-            // Проверяем видимость popUpError
             if (popUpError.isDisplayed()) {
                 throw new AssertionError("Pop-up error should not be displayed.");
             }
         } catch (NoSuchElementException e) {
-            // Если элемент отсутствует, ничего не делаем
         }
         logger.info("pop up displaying is checked");
     }
