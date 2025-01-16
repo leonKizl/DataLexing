@@ -47,36 +47,39 @@ public class LogInPage {
     private WebDriver driver;
 
 
-
     public LogInPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
 
-    public void enterEmail(String email) {
-        SeleniumHelper.waitForElementToBeVisible(driver,emailInput);
+    public LogInPage enterEmail(String email) {
+        SeleniumHelper.waitForElementToBeVisible(driver, emailInput);
         logger.info("Entering email");
         emailInput.sendKeys(email);
         logger.info("Email is entered");
+        return this;
     }
 
-    public void clearEmail() {
+    public LogInPage clearEmail() {
         logger.info("Clearing email input");
         emailInput.clear();
         logger.info("Email input is empty");
+        return this;
     }
 
-    public void enterPassword(String password) {
+    public LogInPage enterPassword(String password) {
         logger.info("Entering password");
-        SeleniumHelper.waitForElementToBeVisible(driver,passwordInput);
+        SeleniumHelper.waitForElementToBeVisible(driver, passwordInput);
         passwordInput.sendKeys(password);
         logger.info("Password is entered");
+        return this;
     }
 
-    public void clearPassword() {
+    public LogInPage clearPassword() {
         logger.info("Clearing password input");
         passwordInput.clear();
         logger.info("Password input is empty");
+        return this;
     }
 
     public String getEmailErrorInputText() {
@@ -91,7 +94,7 @@ public class LogInPage {
 
     public void logInButtonClick() {
         logger.info("Clicking log in button");
-        SeleniumHelper.waitForElementToBeVisible(driver,logInButton);
+        SeleniumHelper.waitForElementToBeVisible(driver, logInButton);
         logInButton.click();
         logger.info("Button is clicked");
     }
@@ -99,7 +102,7 @@ public class LogInPage {
     public void absenceOfEmailInputError(WebDriver driver) {
         logger.info("Check absence of email input error");
         try {
-            SeleniumHelper.waitForElementToBeInvisible(driver,emailInputError);
+            SeleniumHelper.waitForElementToBeInvisible(driver, emailInputError);
         } catch (org.openqa.selenium.TimeoutException e) {
             throw new AssertionError("Email input error is displayed, but it should not be.");
         }
@@ -109,7 +112,7 @@ public class LogInPage {
     public void absenceOfPasswordInputError(WebDriver driver) {
         logger.info("Check absence of password input error");
         try {
-            SeleniumHelper.waitForElementToBeInvisible(driver,passwordInputError);
+            SeleniumHelper.waitForElementToBeInvisible(driver, passwordInputError);
         } catch (org.openqa.selenium.TimeoutException e) {
             throw new AssertionError("Password input error is displayed, but it should not be.");
         }
@@ -118,18 +121,16 @@ public class LogInPage {
     }
 
     public String getTextOfPopUpError() {
-        SeleniumHelper.waitForElementToBeVisible(driver,popUpError);
+        SeleniumHelper.waitForElementToBeVisible(driver, popUpError);
         logger.info("Getting text from pop up");
         System.out.println(popUpError.getAttribute("textContent"));
         return popUpError.getAttribute("textContent");
     }
 
-    public void closePopUpError(WebDriver driver){
+    public void closePopUpError(WebDriver driver) {
         logger.info("Closing pop up");
         Actions actions = new Actions(driver);
-//        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(3));
-//        wait.until(ExpectedConditions.visibilityOf(closePopUpErrorButton));
-        SeleniumHelper.waitForElementToBeVisible(driver,closePopUpErrorButton);
+        SeleniumHelper.waitForElementToBeVisible(driver, closePopUpErrorButton);
         actions.moveToElement(closePopUpErrorButton).click().perform();
         logger.info("pop up is closed");
     }
@@ -144,5 +145,17 @@ public class LogInPage {
         } catch (NoSuchElementException e) {
         }
         logger.info("pop up displaying is checked");
+    }
+
+    public SignUpPage clicksignUpButton() {
+        SeleniumHelper.waitForElementToBeVisible(driver, signUpButton);
+        signUpButton.click();
+        return new SignUpPage(driver);
+    }
+
+    public ForgotPasswordPage clickForgotPasswordButton() {
+        SeleniumHelper.waitForElementToBeVisible(driver,forgotPasswordButton);
+        forgotPasswordButton.click();
+        return new ForgotPasswordPage(driver);
     }
 }
