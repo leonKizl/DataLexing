@@ -217,4 +217,15 @@ public class SignUpPage {
         logger.info("Log in link button is clicked");
         return new LogInPage(driver);
     }
+
+    public HomePage validSignUp(String email){
+        SeleniumHelper.waitForElementToBeVisible(driver,fullNameInput);
+        enterFullName("name");
+        enterEmail(email);
+        enterPassword("Testowanie999!!!");
+        enterPhoneNumber("123456");
+        clickTermPrivacyButton();
+        clickSignUpButton();
+        return new HomePage(driver);
+    }
 }

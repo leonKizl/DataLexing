@@ -3,16 +3,13 @@ package Pages;
 import Utils.SeleniumHelper;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-
-import java.time.Duration;
 
 public class LogInPage {
     @FindBy(css = "[aria-label='Log in']")
@@ -92,7 +89,7 @@ public class LogInPage {
         return passwordInputError.getText();
     }
 
-    public void logInButtonClick() {
+    public void clickLogInButton() {
         logger.info("Clicking log in button");
         SeleniumHelper.waitForElementToBeVisible(driver, logInButton);
         logInButton.click();
@@ -148,14 +145,30 @@ public class LogInPage {
     }
 
     public SignUpPage clicksignUpButton() {
+        logger.info("Clicking sign up button");
         SeleniumHelper.waitForElementToBeVisible(driver, signUpButton);
         signUpButton.click();
+        logger.info("Button is clicked");
         return new SignUpPage(driver);
     }
 
     public ForgotPasswordPage clickForgotPasswordButton() {
         SeleniumHelper.waitForElementToBeVisible(driver,forgotPasswordButton);
+        SeleniumHelper.waitForElementToBeClickable(driver, By.cssSelector("a[href*='/forgot-password']"));
+
+        logger.info("Clicking 'Forgot password?' button");
         forgotPasswordButton.click();
+        logger.info("Button is clicked");
         return new ForgotPasswordPage(driver);
     }
+
+    public HomePage validLogIn(){
+        SeleniumHelper.waitForElementToBeVisible(driver,forgotPasswordButton);
+        enterEmail("testoritoto@mail.ru");
+        enterPassword("Testowanie999!!!");
+        clickLogInButton();
+        return new HomePage(driver);
+    }
+
+
 }

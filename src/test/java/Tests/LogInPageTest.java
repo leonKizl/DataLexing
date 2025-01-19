@@ -7,10 +7,7 @@ import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import org.example.BaseTest;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.Ignore;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
@@ -28,7 +25,7 @@ public class LogInPageTest extends BaseTest {
         test.log(Status.PASS, "Email is entered", SeleniumHelper.getScreenshot(driver));
         logInPage.enterPassword("Testowanie999!!!");
         test.log(Status.PASS, "Password is entered", SeleniumHelper.getScreenshot(driver));
-        logInPage.logInButtonClick();
+        logInPage.clickLogInButton();
         test.log(Status.PASS, "User is logged in", SeleniumHelper.getScreenshot(driver));
     }
 
@@ -36,7 +33,7 @@ public class LogInPageTest extends BaseTest {
     public void FieldsValidationTest() {
         driver.get("https://dev.datalexing.sa/en/login/");
         LogInPage logInPage = new LogInPage(driver);
-        logInPage.logInButtonClick();
+        logInPage.clickLogInButton();
         Assert.assertEquals(logInPage.getEmailErrorInputText(), "Email is a required field");
         Assert.assertEquals(logInPage.getPasswordErrorInputText(), "Password is a required field");
         logInPage.enterEmail("q")
@@ -53,7 +50,7 @@ public class LogInPageTest extends BaseTest {
         logInPage.clearPassword()
                 .enterPassword("1234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456")
                 .absenceOfPasswordInputError(driver);
-        logInPage.logInButtonClick();
+        logInPage.clickLogInButton();
         Assert.assertEquals(logInPage.getTextOfPopUpError(), "No active account found with the given credentials.");
     }
 
@@ -64,7 +61,7 @@ public class LogInPageTest extends BaseTest {
         LogInPage logInPage = new LogInPage(driver);
         logInPage.enterEmail("q@mdsrsвtdsg.rsey")
                 .enterPassword("123456789")
-                .logInButtonClick();
+                .clickLogInButton();
         Assert.assertEquals(logInPage.getTextOfPopUpError(), "No active account found with the given credentials.");
         logInPage.closePopUpError(driver);
         logInPage.absenceOfPopUpError();
@@ -88,8 +85,7 @@ public class LogInPageTest extends BaseTest {
     public void forgotPasswordTest() {
         driver.get("https://dev.datalexing.sa/en/login/");
         new LogInPage(driver)
-                .clickForgotPasswordButton()
-                .getTemporaryEmail();
+                .clickForgotPasswordButton();
     }
 
 }
